@@ -1,0 +1,240 @@
+---
+title: "MOOC Security Learning Insights - CRISP Report"
+author: "Gabriel Medina Galicia"
+date: "2022-11-07"
+output: pdf_document
+editor_options: 
+  markdown: 
+    wrap: sentence
+---
+
+```{r setup, message = FALSE, warning = FALSE, include = FALSE}
+knitr::opts_chunk$set(
+	message = FALSE,
+	warning = FALSE,
+	include = FALSE
+)
+```
+
+```{r library_source_load}
+library("ProjectTemplate")
+load.project()
+
+source("./lib/globals.R")
+source("./lib/helpers.R")
+source("./src/data_understanding.R")
+source("./src/eda.R")
+```
+
+## Document Version
+
+| Date       | Author     | Description                                                      |     |     |
+|--------------|--------------|-----------------|--------------|--------------|
+| 2022-11-05 | Gabriel M. | Initial draft version                                            |     |     |
+| 2022-11-06 | Gabriel M. | Adding executive summary details and business understanding text |     |     |
+| 2022-11-07 | Gabriel M. | Document is now in R Markdown                                    |     |     |
+| 2022-11-11 | Gabriel M. | Adding data description report                                   |     |     |
+| 2022-11-13 | Gabriel M. | Adding data analysis and R code integration                      |     |     |
+
+## Disclaimer
+
+Fictional company names and situations have been used in this assignment only for educational purposes.
+Newcastle University will act as the customer company that is interested in learning more about their data.
+MG Tech Solutions LTD will act as the contractor company who is responsible of delivering a solution to Newcastle University.
+
+## Introduction
+
+The aim of this report is to collect, describe and/or present all the elements produced
+
+### Additional assumptions and considerations
+
+Newcastle University and MG Tech Solutions LTD could be refereed as the customer and the contractor respectively.
+
+## Business Understanding
+
+Newcastle University has developed a Massive Open Online Course (MOOC) entitled "Cyber Security: Safety At Home, Online, and in Life".
+The customer is interested in knowing how the MOOC course has performed throughout all the runs to be able to detect areas of opportunity and increase the number of new enrollments, while preserving the quality of the course at the same time.
+
+As part of the process, the customer would like to have a overview of the current situation on the enrollments, including demographic data of those who enrolled into the course, given the following questions:
+
+### Enrollment Analysis
+
+How many enrollments have we had since the beginning?
+What countries do the enrollments come from?
+What are the demographics of the learners?
+What are the proportions of learners archetypes enroll the course?
+How many enrollments are we expected to have in future runs given the current action plan?
+
+### Leaving analysis
+
+After having understanding the previous set of questions, the customer wants to have an overview of the reasons why people has decided to leave.
+
+What types of learners are likely to leave?
+Common reasons to leave
+
+### Inventory of Resources
+
+-   Personnel
+    -   Data Scientist (1)
+    -   Product Owner (Report reviewer) (1)
+-   Data
+    -   We have been provided with data sets for each course run (7). For each course we have CSV files for:
+        -   Archetype Survey Responses (cyber-security-n_archetype-survey-responses.csv)
+        -   Enrollments (cyber-security-n_enrolments.csv)
+        -   Leaving Survey Responses (cyber-security-n_leaving-survey-responses.csv)
+        -   Question Responses (cyber-security-n_question-response.csv)
+        -   Step Activities (cyber-security-n_step-activity.csv)
+        -   Weekly Sentiment Survey Responses (cyber-security-n_weekly-sentiment-survey-responses.csv)
+        -   Course Overview (run n - Course overview - FutureLearn Course Creator.pdf)
+-   Computing Resources
+    -   Newcastle University Computer Clusters
+    -   1 Personal Computer
+-   Technology Stack (Software)
+    -   R (latest distribution up to date)
+    -   ProjectTemplate (latest distribution up to date)
+    -   GGplot (latest compatible version with the latest distribution of R)
+    -   Tidyverse (latest compatible version with the latest distribution of R)
+    -   RMarkdown (latest distribution up to date)
+    -   RStudio (latest distribution up to date)
+
+### Requirements
+
+An MVP (Minimal Viable Product) must by delivered by 18 November 2022 16:30 BST.
+
+The MVP should include:
+
+-   A full detailed report including elements considered in each stage of the CRISP-DM process
+-   A demo presentation
+-   A retrospective report
+
+### Assumptions
+
+Staff works 4 hours a day, 20 hours per week.
+
+### Constraints
+
+-   Not all students enrolled in this course have disclosed their demographic data.
+-   Total development hours to deliver: 60 hours (4 hours per week)
+
+### Risks and Contingencies
+
+In the event of any issue that might delay the delivery of the MVP, the contractor staff should be in contact immediately with the customer staff to be able to negotiate a later delivery date.
+
+### Terminology
+
+MVP (Minimal Viable Product)
+
+## Data Understanding
+
+### Data Description
+
+In the following section, a summary of the number of records plus, its data types and a sample of the records from the 7th data set is presented in form of R code output:
+
+```{r data_description, include = TRUE, message = TRUE}
+
+display_description_report()
+
+```
+
+We decided to only include the 7th data run in the description report as, based on complete data explorations, as surveys appear to be recorded from the 5th run onwards.
+
+### Data Quality
+
+#### Missing Data
+
+For summary and report purposes, a country code datafile has been added to our data repository.
+Source: <https://github.com/lukes/ISO-3166-Countries-with-Regional-Codes/blob/master/all/all.csv>.
+
+NA and null values depending on what information they represent will be treated as "Unknown", "Undetermined" or omitted from statistical reports.
+
+As mention in Data Description section, not all the runs recorded survey data from the beginning.
+As such, only the runs that include data will be considered.
+
+### Initial Data Exploration
+
+## Data Preparation
+
+Not all data from the provided sources is going to be selected for the purposes of our analysis.
+The following list includes the data sets considered for our analysis:
+
+-   Enrollments
+
+    -   All runs have been condensed in one single data set per category, adding one column "run_nums" that identifies the run it belongs to, so that we could analyse and explore data considering all runs.
+
+### Exploratory Data Analysis
+
+### Enrollment
+
+How many enrollments have we had since the beginning?
+
+```{r eda, include = TRUE, message = TRUE}
+
+df <- get_enrolments_count_per_run(enrolments_df)
+df <- df %>% rename( c(Run.Number = run_num, Enrolments = n) )
+knitr::kable(df, col.names = gsub("[.]", " ", names(df)))
+
+p <- get_plot_enrolments_count_per_run(enrolments_df)
+p
+
+```
+
+What countries do the enrollments come from?
+
+```{r eda_1, include = TRUE, message = TRUE}
+
+get_plot_enrolements_count_per_country(enrolments_df)
+
+```
+
+What are the demographics of the learners?
+
+What are the proportions of learners archetypes enroll the course?
+
+
+
+## Modeling
+
+The aim of this section is to present and summaries any data mining or machine leaning modeling analysis.
+
+As for the initial efforts for the enrollment analysis, the customer is interested in knowing how many enrollments can they expected in the following runs given their current conditions (teaching techniques, marketing campaigns, etc.)
+
+For the rest of the information, modeling is not currently a required step to obtains a deliverable product.
+In future iterations, we should consider that the customer would like us to do more research.
+
+### Modelling technique
+
+Linear Regression
+
+### Modelling
+
+## Evaluation
+
+We consider that the customer can get a reasonable insight of the current course situation.
+Continuous efforts should be deployed in order to .
+In case in future runs the enrollment trend changes, we can create new analysis instances based on data from new runs.
+
+## Deployment
+
+As for now, as there are no models that need to be deployed.
+However, we should consider this report itself and the data manipulation and analysis coding as a deployable units, all of them organized into a deployable unit using ProjectTemplate.
+
+ProjectTemplate is an open source opinionated tool that allow us to set up a data science project by providing templates and organizing files in predefined directories, allowing the user to easily include data, set processing scripts in various steps and perform code profiling and unit testing.
+
+To be able to generate a new version of this report, the one who decides to publish a new version should execute a pipeline that includes the generation (knitting) of this PDF document.
+The deployment execution pipeline using continuous deployment and continuous integration is planned to be implemented in future iterations.
+
+As for now, project should be loaded into RStudio, then "report.rmd" file opened and proceed to execute the "Knit" command to generate a PDF in the "reports" directory.
+
+### Development phases and repository branching strategy
+
+Code units, unit testing and documentation is all condensed in a single GIT repository that contains the root of a ProjectTemplate project.
+
+For internal purposes, we used GIT to keep track of changes.
+
+As this project was only managed by one person of our staff, no branching strategy was followed.
+Once this project gets to production, the following GIT branching strategy should be used:
+
+-   **master**: Holds the final production deliverable
+-   **uat**: Deliverable ready for User Acceptance Test
+-   **dev**: Stable branch for developers and data scientist with latest code and report changes.
+-   Each developer or data scientist should create their own branch from dev to keep track of their own feature (i.e. dev_gabriel, dev_gabriel_regularization, etc) which will be later reviewed by other developers or data scientists via Pull Requests to dev branch.
