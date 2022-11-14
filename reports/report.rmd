@@ -2,7 +2,8 @@
 title: "MOOC Security Learning Insights - CRISP Report"
 author: "Gabriel Medina Galicia"
 date: "2022-11-07"
-output: pdf_document
+output: 
+  bookdown::pdf_document2: default
 editor_options: 
   markdown: 
     wrap: sentence
@@ -27,39 +28,40 @@ source("./src/data_understanding.R")
 source("./src/eda.R")
 ```
 
-## Document Version
+# Document Version
 
 | Date       | Author     | Description                                                      |
-|---------------|---------------|---------------|
+|------------------------|------------------------|------------------------|
 | 2022-11-05 | Gabriel M. | Initial draft version                                            |
 | 2022-11-06 | Gabriel M. | Adding executive summary details and business understanding text |
 | 2022-11-07 | Gabriel M. | Document is now in R Markdown                                    |
 | 2022-11-11 | Gabriel M. | Adding data description report                                   |
 | 2022-11-13 | Gabriel M. | Adding data analysis and R code integration                      |
 
-## Disclaimer
+# Disclaimer
 
 Fictional company names and situations have been used in this assignment only for educational purposes.
 Newcastle University will act as the customer company that is interested in learning more about their data.
 MG Tech Solutions LTD will act as the contractor company who is responsible of delivering a solution to Newcastle University.
 
-## Introduction
+# Introduction
 
 The aim of this report is to collect, describe and/or present all the items produced while creating a data project following CRISP-DM methodology.
 CRISP-DM methodology has been used for about 20 years in many data projects across the information technology industry as well as research and development.
+Most of the item considerations for this document were taken from the IBM SPSS Modeler CRISP-DM Guide and from the standard reference guide.
 
-### Additional assumptions and considerations
+# Intial assumptions and considerations
 
 Newcastle University and MG Tech Solutions LTD could be refereed in this document as the customer and the contractor respectively.
 
-## Business Understanding
+# Business Understanding
 
 Newcastle University has developed a Massive Open Online Course (MOOC) entitled "Cyber Security: Safety At Home, Online, and in Life".
 The customer is interested in knowing how the MOOC course has performed throughout all the runs to be able to detect areas of opportunity and increase the number of new enrollments, while preserving the quality of the course at the same time.
 
 As part of the process, the customer would like to have a overview of the current situation on the enrollments, including demographic data of those who enrolled into the course, given the following questions:
 
-### Enrollment Analysis
+## Enrollment Analysis
 
 How many enrollments have we had since the beginning?
 What countries do the enrollments come from?
@@ -67,14 +69,14 @@ What are the demographics of the learners?
 What are the proportions of learners archetypes enroll the course?
 How many enrollments are we expected to have in future runs given the current action plan?
 
-### Leaving analysis
+## Leaving analysis
 
 After having understanding the previous set of questions, the customer would also want to have an overview of the reasons why people has decided to leave.
 
 What types of learners are likely to leave?
 What are the most common reasons to leave?
 
-### Inventory of Resources
+## Inventory of Resources
 
 -   Personnel
     -   Data Scientist (1)
@@ -99,7 +101,7 @@ What are the most common reasons to leave?
     -   RMarkdown (latest distribution up to date)
     -   RStudio (latest distribution up to date)
 
-### Requirements
+## Requirements
 
 An MVP (Minimal Viable Product) must by delivered by 18 November 2022 16:30 BST.
 
@@ -109,35 +111,46 @@ The MVP should include:
 -   A demo presentation
 -   A retrospective report
 
-### Assumptions
+## Assumptions
 
 Staff works 4 hours a day, 20 hours per week.
 
-### Constraints
+## Constraints
 
 -   Not all students enrolled in this course have disclosed their demographic data.
 -   Total development hours to deliver: 60 hours (4 hours per week)
 
-### Risks and Contingencies
+## Risks and Contingencies
 
 In the event of any issue that might delay the delivery of the MVP, the contractor staff should be in contact immediately with the customer staff to be able to negotiate a later delivery date.
 
-### Business Success Criteria
+## Business Success Criteria
 
 The customer should be able to easily identify the areas where improvements can be done to attract more learners to enroll, by using summarized data presented in form of simplified tables and charts.
 
-Furthermore, provided we have data from surveys by learners archetypes and leaving reasons, the customer would be able visualize what causes the learners not to fully complete the course and, possibly, not encouraging other people to take this course.
+Furthermore, provided we have data from surveys by learners archetypes and leaving reasons, the customer should be able visualize what causes the learners not to fully complete the course and, possibly, not encouraging other people to take this course, as well as identify the learning profile of leavers.
 
-### Terminology
+## Terminology
 
-#### MVP (Minimal Viable Product)
+### MVP (Minimal Viable Product)
 
 -   A version of a new product which allows a team to collect the maximum amount of validated learning about customers with the least effort. (Lean Startup: <http://www.startuplessonslearned.com/2009/08/minimum-viable-product-guide.html>)
 -   A version of a product with just enough features to be usable by early customers who can then provide feedback for future product development. (Wikipedia: <https://en.wikipedia.org/wiki/Minimum_viable_product>)
 
-## Data Understanding
+### Learner archetype
 
-### Data Description
+-   An archetype is a personification of a collection of traits. (<https://www.laurastrudwick.com/blog/2020/2/16/archetypes-of-learners>)
+    -   Advancers: Ambitious and self-motivated to do better, progress and not stagnate.
+    -   Explorers: Evaluators of their options and like to inform their decisions about what to do next.
+    -   Fixers: They understand or manage current aspects of ther personal life
+    -   Flourishers: Enjoyers of self learning in order to be happy and healthy in their personal and professional lives.
+    -   Hobbyists: They are learn to support their existing personal projects, leisure activities and pastimes
+    -   Prepares: They tend to be starting out in jobs, careers or related study, having chosen what they want to do.
+    -   Vitalisers: Learning is ther hobbie and they do things for the love of learning
+
+# Data Understanding
+
+## Data Description
 
 In the following section, a summary of the number of records plus, its data types and a sample of the records from the 7th data set is presented in form of R code output:
 
@@ -149,9 +162,9 @@ display_description_report()
 
 We decided to only include the 7th data run in the description report as, based on complete data explorations,surveys appear to be recorded from the 5th run onwards.
 
-### Data Quality
+## Data Quality
 
-#### Missing Data
+### Missing Data
 
 For summary and report purposes, a country code datafile has been added to our data repository.
 Source: <https://github.com/lukes/ISO-3166-Countries-with-Regional-Codes/blob/master/all/all.csv>.
@@ -161,9 +174,9 @@ NA and null values depending on what information they represent will be treated 
 As mention in Data Description section, not all the runs recorded survey data from the beginning.
 As such, only the runs that include data will be considered.
 
-### Initial Data Exploration
+## Initial Data Exploration
 
-## Data Preparation
+# Data Preparation
 
 Not all data from the provided sources are going to be selected for the purposes of our analysis.
 The following list includes the data sets considered for our analysis:
@@ -175,33 +188,32 @@ The following list includes the data sets considered for our analysis:
 
 -   Archetype Survey Responses
 
-### Exploratory Data Analysis
+## Exploratory Data Analysis
 
 ### Enrollment
 
-How many enrollments have we had since the beginning?
+#### How many enrollments have we had since the beginning?
 
 ```{r eda, include = TRUE, message = TRUE}
 
 df <- get_enrolments_count_per_run(enrolments_df)
 df <- df %>% rename( c(Run.Number = run_num, Enrolments = n) )
-knitr::kable(df, col.names = gsub("[.]", " ", names(df)))
+knitr::kable(df, col.names = gsub("[.]", " ", names(df)), caption = "Enrollments over all runs")
 
 ```
 
-```{r eda_0_1, include = TRUE, message = TRUE}
+```{r eda01, include = TRUE, message = TRUE, out.width="75%", fig.cap="Enrollments over all runs", fig.align='center'}
 
-knitr::opts_chunk$set(fig.height=unit(4,"cm"))
 p <- get_plot_enrolments_count_per_run(enrolments_df)
 p
 
 ```
 
-As we can see from the previously presented tables, the first run has a considerable amount of enrollments, probably due to it being the first run.
+As we can see from the previously presented table \@ref(tab:eda) and in figure \@ref(fig:eda01), the first run has a considerable amount of enrollments, probably due to it being the first run.
 
-What countries do the enrollments come from?
+#### What countries do the enrollments come from?
 
-```{r eda_1, include = TRUE, message = TRUE}
+```{r eda1, include = TRUE, message = TRUE, out.width="75%", fig.cap="Total Enrollments per Country", fig.align='center'}
 get_plot_enrolements_count_per_country(enrolments_df)
 
 ```
@@ -210,15 +222,18 @@ As Newcastle University is an institution in the United Kingdom, it is evident t
 
 ### Learners demographics
 
-**Ages**
+#### Ages
 
-```{r eda_2, include = TRUE, message = TRUE}
-
-knitr::opts_chunk$set(fig.height=unit(4,"cm"))
+```{r eda20, include = TRUE, message = TRUE, out.width="75%", fig.cap="Total Enrollments per Age Range", fig.align='center'}
 
 df <- get_enrolments_count_per_age(enrolments_df)
 df <- df %>% rename( c(Age.Range = age_range, Enrolments = n) )
 knitr::kable(df, col.names = gsub("[.]", " ", names(df)))
+
+
+```
+
+```{r eda2, include = TRUE, message = TRUE, out.width="75%", fig.cap="Total Enrollments per Age Range", fig.align='center'}
 
 get_plot_enrolments_count_per_age(enrolments_df)
 
@@ -226,9 +241,9 @@ get_plot_enrolments_count_per_age(enrolments_df)
 
 We can observe that the most enthusiastic age group to be enrolled was 25-35.
 
-**Highest Education Level**
+#### Highest Education Level
 
-```{r eda_3, include = TRUE, message = TRUE}
+```{r eda3, include = TRUE, message = TRUE, out.width="75%", fig.cap="Total Enrollments per Highest Education Level", fig.align='center'}
 df <- get_enrolments_count_per_edlvl(enrolments_df)
 df <- df %>% rename( c(Highest.Education.Level = highest_education_level, Enrolments = n) )
 knitr::kable(df, col.names = gsub("[.]", " ", names(df)))
@@ -239,9 +254,9 @@ get_plot_enrolments_count_per_edlvl(enrolments_df)
 
 People with University degrees are an important proportion of the enrollments, followed by University masters.
 
-**Employment Status**
+#### Employment Status
 
-```{r eda_4, include = TRUE, message = TRUE}
+```{r eda4, include = TRUE, message = TRUE, out.width="75%", fig.cap="Total Enrollments per Employment Status", fig.align='center'}
 df <- get_enrolments_count_per_employment_status(enrolments_df)
 df <- df %>% rename( c(Employment.Status = employment_status, Enrolments = n) )
 knitr::kable(df, col.names = gsub("[.]", " ", names(df)))
@@ -252,9 +267,9 @@ get_plot_enrolments_count_per_employment_status(enrolments_df)
 
 Those who are working full time make are the ones more attracted to be enrolled in this course.
 
-**Employment Area**
+#### Employment Area
 
-```{r eda_5, include = TRUE, message = TRUE}
+```{r eda5, include = TRUE, message = TRUE, out.width="75%", fig.cap="Total Enrollments per Employment Area", fig.align='center'}
 df <- get_enrolments_count_per_employment_area(enrolments_df)
 df <- df %>% rename( c(Employment.Area = employment_area, Enrolments = n) )
 knitr::kable(df, col.names = gsub("[.]", " ", names(df)))
@@ -265,11 +280,11 @@ get_plot_enrolments_count_per_employment_area(enrolments_df)
 
 Not surprisingly, Information Technology is the predominant area, as this course provides tools and information that is crucial for this particular sector.
 
-### Leaving Surveys
+## Leaving Surveys
 
 Learners archetypes leaving
 
-```{r eda_7, include = TRUE, message = TRUE}
+```{r eda7, include = TRUE, message = TRUE, out.width="75%", fig.cap="Total Leavings per Archetypes", fig.align='center'}
 
 df <- get_archetypes_count_from_survey_responses(archetype_survey_df)
 df <- df %>% rename( c(Archetype = archetype, Leaving.Count = n) )
@@ -281,9 +296,9 @@ get_plot_archetypes_count_from_survey_responses(archetype_survey_df)
 
 We found that vitalisers were the group that leave the most from the total runs.
 
-Leaving reasons
+#### Leaving reasons
 
-```{r eda_8, include = TRUE, message = TRUE}
+```{r eda8, include = TRUE, message = TRUE, out.width="75%", fig.cap="Leaving Reasons for all Runs", fig.align='center'}
 
 df <- get_leaving_reasons_count(leaving_survey_df)
 df <- df %>% rename( c(Leaving.Reason = leaving_reason, Leaving.Count = n) )
@@ -295,7 +310,7 @@ get_plot_leaving_reasons_count(leaving_survey_df)
 
 The most common leaving reason was that learners do not have enough time to complete or follow the pace of the course.
 
-### Modeling
+## Modeling
 
 The aim of this section is to present and summaries of any data mining or machine learning modeling analysis.
 
@@ -305,14 +320,14 @@ Based on our previous analysis, we can use the data from the enrollments per run
 For this current deployment cycle, modeling is not currently a required step to obtain a deliverable product.
 In future iterations, we should consider that the customer would like us to do more research in this particular topic.
 
-## Evaluation
+# Evaluation
 
 We consider that the customer can get a reasonable insight of the current course situation.
 Continuous efforts should be deployed in order to increase enrollments.
 As it could be seen from the Exploratory Data Analysis, there is a significant difference between the United Kingdom and the rest of the countries.
 In case in future runs the enrollment trend changes, we can create new analysis instances based on data from new runs.
 
-## Deployment
+# Deployment
 
 As for now, as there are no models that need to be deployed.
 However, we should consider this report itself and the data manipulation and analysis coding as a deployable units, all of them organized into a deployable unit using ProjectTemplate.
@@ -324,7 +339,7 @@ The deployment execution pipeline using continuous deployment and continuous int
 
 As for now, the project directory should be loaded into RStudio, set as the working directory, have the "report.rmd" file opened and proceed to execute the "Knit" command to generate a PDF in the "reports" directory.
 
-### Development phases and repository branching strategy
+## Development phases and repository branching strategy
 
 Code units, unit testing and documentation is all condensed in a single GIT repository that contains the root of a ProjectTemplate project.
 
