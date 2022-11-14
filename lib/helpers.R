@@ -39,11 +39,22 @@ get_all_dataset_names <- function(number_of_runs = NUMBER_OF_RUNS, datasets_temp
 }
 
 
-
 #' Gets all the data names of the enrolments dataset used in R environment
 #' @param number_of_runs Number of runs
 get_enrolments_dataset_names <- function(number_of_runs = NUMBER_OF_RUNS) {
   get_all_dataset_names(number_of_runs, list(ENROLEMENTS_DATA_SET_BASE_STR))
+}
+
+#' Gets all the data names of the archetype survey dataset used in R environment
+#' @param number_of_runs Number of runs
+get_archetype_survey_dataset_names <- function(number_of_runs = NUMBER_OF_RUNS) {
+  get_all_dataset_names(number_of_runs, list(ARCHETYPE_SURVERY_RESPONSES_DATA_SET_BASE_STR))
+}
+
+#' Gets all the data names of the leaving survey dataset used in R environment
+#' @param number_of_runs Number of runs
+get_leaving_survey_dataset_names <- function(number_of_runs = NUMBER_OF_RUNS) {
+  get_all_dataset_names(number_of_runs, list(LEAVING_SURVEY_DATA_SET_BASE_STR))
 }
 
 #' Gets all the data names of the enrolments dataset used in R environment

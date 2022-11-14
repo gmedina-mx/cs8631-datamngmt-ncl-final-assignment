@@ -14,6 +14,7 @@ knitr::opts_chunk$set(
 	warning = FALSE,
 	include = FALSE
 )
+
 ```
 
 ```{r library_source_load}
@@ -28,13 +29,13 @@ source("./src/eda.R")
 
 ## Document Version
 
-| Date       | Author     | Description                                                      |     |     |
-|--------------|--------------|-----------------|--------------|--------------|
-| 2022-11-05 | Gabriel M. | Initial draft version                                            |     |     |
-| 2022-11-06 | Gabriel M. | Adding executive summary details and business understanding text |     |     |
-| 2022-11-07 | Gabriel M. | Document is now in R Markdown                                    |     |     |
-| 2022-11-11 | Gabriel M. | Adding data description report                                   |     |     |
-| 2022-11-13 | Gabriel M. | Adding data analysis and R code integration                      |     |     |
+| Date       | Author     | Description                                                      |
+|---------------|---------------|---------------|
+| 2022-11-05 | Gabriel M. | Initial draft version                                            |
+| 2022-11-06 | Gabriel M. | Adding executive summary details and business understanding text |
+| 2022-11-07 | Gabriel M. | Document is now in R Markdown                                    |
+| 2022-11-11 | Gabriel M. | Adding data description report                                   |
+| 2022-11-13 | Gabriel M. | Adding data analysis and R code integration                      |
 
 ## Disclaimer
 
@@ -44,11 +45,12 @@ MG Tech Solutions LTD will act as the contractor company who is responsible of d
 
 ## Introduction
 
-The aim of this report is to collect, describe and/or present all the elements produced
+The aim of this report is to collect, describe and/or present all the items produced while creating a data project following CRISP-DM methodology.
+CRISP-DM methodology has been used for about 20 years in many data projects across the information technology industry as well as research and development.
 
 ### Additional assumptions and considerations
 
-Newcastle University and MG Tech Solutions LTD could be refereed as the customer and the contractor respectively.
+Newcastle University and MG Tech Solutions LTD could be refereed in this document as the customer and the contractor respectively.
 
 ## Business Understanding
 
@@ -67,10 +69,10 @@ How many enrollments are we expected to have in future runs given the current ac
 
 ### Leaving analysis
 
-After having understanding the previous set of questions, the customer wants to have an overview of the reasons why people has decided to leave.
+After having understanding the previous set of questions, the customer would also want to have an overview of the reasons why people has decided to leave.
 
 What types of learners are likely to leave?
-Common reasons to leave
+What are the most common reasons to leave?
 
 ### Inventory of Resources
 
@@ -120,9 +122,18 @@ Staff works 4 hours a day, 20 hours per week.
 
 In the event of any issue that might delay the delivery of the MVP, the contractor staff should be in contact immediately with the customer staff to be able to negotiate a later delivery date.
 
+### Business Success Criteria
+
+The customer should be able to easily identify the areas where improvements can be done to attract more learners to enroll, by using summarized data presented in form of simplified tables and charts.
+
+Furthermore, provided we have data from surveys by learners archetypes and leaving reasons, the customer would be able visualize what causes the learners not to fully complete the course and, possibly, not encouraging other people to take this course.
+
 ### Terminology
 
-MVP (Minimal Viable Product)
+#### MVP (Minimal Viable Product)
+
+-   A version of a new product which allows a team to collect the maximum amount of validated learning about customers with the least effort. (Lean Startup: <http://www.startuplessonslearned.com/2009/08/minimum-viable-product-guide.html>)
+-   A version of a product with just enough features to be usable by early customers who can then provide feedback for future product development. (Wikipedia: <https://en.wikipedia.org/wiki/Minimum_viable_product>)
 
 ## Data Understanding
 
@@ -136,7 +147,7 @@ display_description_report()
 
 ```
 
-We decided to only include the 7th data run in the description report as, based on complete data explorations, as surveys appear to be recorded from the 5th run onwards.
+We decided to only include the 7th data run in the description report as, based on complete data explorations,surveys appear to be recorded from the 5th run onwards.
 
 ### Data Quality
 
@@ -154,12 +165,15 @@ As such, only the runs that include data will be considered.
 
 ## Data Preparation
 
-Not all data from the provided sources is going to be selected for the purposes of our analysis.
+Not all data from the provided sources are going to be selected for the purposes of our analysis.
 The following list includes the data sets considered for our analysis:
 
 -   Enrollments
 
     -   All runs have been condensed in one single data set per category, adding one column "run_nums" that identifies the run it belongs to, so that we could analyse and explore data considering all runs.
+    -   Categorical values that are in snake case are converted to pascal case.
+
+-   Archetype Survey Responses
 
 ### Exploratory Data Analysis
 
@@ -173,44 +187,129 @@ df <- get_enrolments_count_per_run(enrolments_df)
 df <- df %>% rename( c(Run.Number = run_num, Enrolments = n) )
 knitr::kable(df, col.names = gsub("[.]", " ", names(df)))
 
+```
+
+```{r eda_0_1, include = TRUE, message = TRUE}
+
+knitr::opts_chunk$set(fig.height=unit(4,"cm"))
 p <- get_plot_enrolments_count_per_run(enrolments_df)
 p
 
 ```
 
+As we can see from the previously presented tables, the first run has a considerable amount of enrollments, probably due to it being the first run.
+
 What countries do the enrollments come from?
 
 ```{r eda_1, include = TRUE, message = TRUE}
-
 get_plot_enrolements_count_per_country(enrolments_df)
 
 ```
 
-What are the demographics of the learners?
+As Newcastle University is an institution in the United Kingdom, it is evident that most enrollments come from this country.
 
-What are the proportions of learners archetypes enroll the course?
+### Learners demographics
 
+**Ages**
 
+```{r eda_2, include = TRUE, message = TRUE}
 
-## Modeling
+knitr::opts_chunk$set(fig.height=unit(4,"cm"))
 
-The aim of this section is to present and summaries any data mining or machine leaning modeling analysis.
+df <- get_enrolments_count_per_age(enrolments_df)
+df <- df %>% rename( c(Age.Range = age_range, Enrolments = n) )
+knitr::kable(df, col.names = gsub("[.]", " ", names(df)))
 
-As for the initial efforts for the enrollment analysis, the customer is interested in knowing how many enrollments can they expected in the following runs given their current conditions (teaching techniques, marketing campaigns, etc.)
+get_plot_enrolments_count_per_age(enrolments_df)
 
-For the rest of the information, modeling is not currently a required step to obtains a deliverable product.
-In future iterations, we should consider that the customer would like us to do more research.
+```
 
-### Modelling technique
+We can observe that the most enthusiastic age group to be enrolled was 25-35.
 
-Linear Regression
+**Highest Education Level**
 
-### Modelling
+```{r eda_3, include = TRUE, message = TRUE}
+df <- get_enrolments_count_per_edlvl(enrolments_df)
+df <- df %>% rename( c(Highest.Education.Level = highest_education_level, Enrolments = n) )
+knitr::kable(df, col.names = gsub("[.]", " ", names(df)))
+
+get_plot_enrolments_count_per_edlvl(enrolments_df)
+
+```
+
+People with University degrees are an important proportion of the enrollments, followed by University masters.
+
+**Employment Status**
+
+```{r eda_4, include = TRUE, message = TRUE}
+df <- get_enrolments_count_per_employment_status(enrolments_df)
+df <- df %>% rename( c(Employment.Status = employment_status, Enrolments = n) )
+knitr::kable(df, col.names = gsub("[.]", " ", names(df)))
+
+get_plot_enrolments_count_per_employment_status(enrolments_df)
+
+```
+
+Those who are working full time make are the ones more attracted to be enrolled in this course.
+
+**Employment Area**
+
+```{r eda_5, include = TRUE, message = TRUE}
+df <- get_enrolments_count_per_employment_area(enrolments_df)
+df <- df %>% rename( c(Employment.Area = employment_area, Enrolments = n) )
+knitr::kable(df, col.names = gsub("[.]", " ", names(df)))
+
+get_plot_enrolments_count_per_employment_area(enrolments_df)
+
+```
+
+Not surprisingly, Information Technology is the predominant area, as this course provides tools and information that is crucial for this particular sector.
+
+### Leaving Surveys
+
+Learners archetypes leaving
+
+```{r eda_7, include = TRUE, message = TRUE}
+
+df <- get_archetypes_count_from_survey_responses(archetype_survey_df)
+df <- df %>% rename( c(Archetype = archetype, Leaving.Count = n) )
+knitr::kable(df, col.names = gsub("[.]", " ", names(df)))
+
+get_plot_archetypes_count_from_survey_responses(archetype_survey_df)
+
+```
+
+We found that vitalisers were the group that leave the most from the total runs.
+
+Leaving reasons
+
+```{r eda_8, include = TRUE, message = TRUE}
+
+df <- get_leaving_reasons_count(leaving_survey_df)
+df <- df %>% rename( c(Leaving.Reason = leaving_reason, Leaving.Count = n) )
+knitr::kable(df, col.names = gsub("[.]", " ", names(df)))
+
+get_plot_leaving_reasons_count(leaving_survey_df)
+
+```
+
+The most common leaving reason was that learners do not have enough time to complete or follow the pace of the course.
+
+### Modeling
+
+The aim of this section is to present and summaries of any data mining or machine learning modeling analysis.
+
+As for the initial efforts for the enrollment analysis, the customer is interested in knowing how many enrollments can they expect in the following runs given their current conditions (teaching techniques, marketing campaigns, etc.)
+
+Based on our previous analysis, we can use the data from the enrollments per run to try to predict the following number of runs in future project iteration.
+For this current deployment cycle, modeling is not currently a required step to obtain a deliverable product.
+In future iterations, we should consider that the customer would like us to do more research in this particular topic.
 
 ## Evaluation
 
 We consider that the customer can get a reasonable insight of the current course situation.
-Continuous efforts should be deployed in order to .
+Continuous efforts should be deployed in order to increase enrollments.
+As it could be seen from the Exploratory Data Analysis, there is a significant difference between the United Kingdom and the rest of the countries.
 In case in future runs the enrollment trend changes, we can create new analysis instances based on data from new runs.
 
 ## Deployment
@@ -223,7 +322,7 @@ ProjectTemplate is an open source opinionated tool that allow us to set up a dat
 To be able to generate a new version of this report, the one who decides to publish a new version should execute a pipeline that includes the generation (knitting) of this PDF document.
 The deployment execution pipeline using continuous deployment and continuous integration is planned to be implemented in future iterations.
 
-As for now, project should be loaded into RStudio, then "report.rmd" file opened and proceed to execute the "Knit" command to generate a PDF in the "reports" directory.
+As for now, the project directory should be loaded into RStudio, set as the working directory, have the "report.rmd" file opened and proceed to execute the "Knit" command to generate a PDF in the "reports" directory.
 
 ### Development phases and repository branching strategy
 
