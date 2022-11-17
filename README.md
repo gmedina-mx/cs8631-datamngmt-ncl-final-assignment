@@ -1,18 +1,14 @@
-# cs8631-datamngmt-ncl-final-assignment
+# CS8631 Data Management and Exploratory Data Analysis, Final Assignment
 
-Welcome to ProjectTemplate!
+## cs8631-datamngmt-ncl-final-assignment
 
-This file introduces you to ProjectTemplate, but you should eventually replace
-the contents of this file with an introduction to your project. People who
-work with your data in the future will thank you for it, including your future
-self.
+## About The Project
 
-ProjectTemplate is an R package that helps you organize your statistical
-analysis projects. Since you're reading this file, we'll assume that you've
-already called `create.project()` to set up this project and all of its
-contents.
+This is a personal repository for cs8631 module assignment.
 
-To load your new project, you'll first need to `setwd()` into the directory
+This project uses ProjectTemplate as an opinionated tool for organizing R source code and to generate a final report.
+
+To load your this project, you'll first need to `setwd()` into the directory
 where this README file is located. Then you need to run the following two
 lines of R code:
 
@@ -36,4 +32,10 @@ If the files start with the two lines mentioned above:
 You'll have access to all of your data, already fully preprocessed, and
 all of the libraries you want to use.
 
-For more details about ProjectTemplate, see http://projecttemplate.net
+## Considerations
+
+In case project is not building:
+-    Make sure ProjectTemplate and the following libraries: bookdown, reshape2, plyr, tidyverse, stringr, lubridate, snakecase.
+-    A LaTex distribution is installed.
+-    R distributions is installed.
+

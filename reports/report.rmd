@@ -33,10 +33,12 @@ source("./src/eda.R")
 | Date       | Author     | Description                                                      |
 |------------------------|------------------------|------------------------|
 | 2022-11-05 | Gabriel M. | Initial draft version                                            |
-| 2022-11-06 | Gabriel M. | Adding executive summary details and business understanding text |
+| 2022-11-06 | Gabriel M. | Adding executive summary details and business understanding text for Enrollments Process |
 | 2022-11-07 | Gabriel M. | Document is now in R Markdown                                    |
 | 2022-11-11 | Gabriel M. | Adding data description report                                   |
 | 2022-11-13 | Gabriel M. | Adding data analysis and R code integration                      |
+| 2022-11-14 | Gabriel M. | Adding executive summary details, business understanding and data analysis for Leaving Reasons and Archetypes |
+| 2022-11-14 | Gabriel M. | Refining figures, tables, deployment and unit testing details |
 
 # Disclaimer
 
@@ -53,6 +55,7 @@ Most of the item considerations for this document were taken from the IBM SPSS M
 # Intial assumptions and considerations
 
 Newcastle University and MG Tech Solutions LTD could be refereed in this document as the customer and the contractor respectively.
+This document was produced as a result of 2 business understanding, data understanding and data preparation cycles. First, the understanding and data related to enrollments; second, the understanding and data related to leaving reasons and archetypes of learners leaving.
 
 # Business Understanding
 
@@ -63,18 +66,18 @@ As part of the process, the customer would like to have a overview of the curren
 
 ## Enrollment Analysis
 
-How many enrollments have we had since the beginning?
-What countries do the enrollments come from?
-What are the demographics of the learners?
-What are the proportions of learners archetypes enroll the course?
-How many enrollments are we expected to have in future runs given the current action plan?
+-    How many enrollments have we had since the beginning?
+-    What countries do the enrollments come from?
+-    What are the demographics of the learners?
+-    What are the proportions of learners archetypes enroll the course?
+-    How many enrollments are we expected to have in future runs given the current action plan?
 
 ## Leaving analysis
 
-After having understanding the previous set of questions, the customer would also want to have an overview of the reasons why people has decided to leave.
+After having understanding the previous set of questions, as part of a re-iteration of the business understanding cycle, the customer would also want to have an overview of the reasons why people has decided to leave.
 
-What types of learners are likely to leave?
-What are the most common reasons to leave?
+-    What types of learners are likely to leave?
+-    What are the most common reasons to leave?
 
 ## Inventory of Resources
 
@@ -139,14 +142,15 @@ Furthermore, provided we have data from surveys by learners archetypes and leavi
 
 ### Learner archetype
 
--   An archetype is a personification of a collection of traits. (<https://www.laurastrudwick.com/blog/2020/2/16/archetypes-of-learners>)
-    -   Advancers: Ambitious and self-motivated to do better, progress and not stagnate.
-    -   Explorers: Evaluators of their options and like to inform their decisions about what to do next.
-    -   Fixers: They understand or manage current aspects of ther personal life
-    -   Flourishers: Enjoyers of self learning in order to be happy and healthy in their personal and professional lives.
-    -   Hobbyists: They are learn to support their existing personal projects, leisure activities and pastimes
-    -   Prepares: They tend to be starting out in jobs, careers or related study, having chosen what they want to do.
-    -   Vitalisers: Learning is ther hobbie and they do things for the love of learning
+-    An archetype is a personification of a collection of traits. (<https://www.laurastrudwick.com/blog/2020/2/16/archetypes-of-learners>)
+-    Archetype types:
+     -    Advancers: Ambitious and self-motivated to do better, progress and not stagnate.
+     -    Explorers: Evaluators of their options and like to inform their decisions about what to do next.
+     -    Fixers: They understand or manage current aspects of ther personal life
+     -    Flourishers: Enjoyers of self learning in order to be happy and healthy in their personal and professional lives.
+     -    Hobbyists: They are learn to support their existing personal projects, leisure activities and pastimes
+     -    Prepares: They tend to be starting out in jobs, careers or related study, having chosen what they want to do.
+     -    Vitalisers: Learning is ther hobbie and they do things for the love of learning
 
 # Data Understanding
 
@@ -198,7 +202,8 @@ The following list includes the data sets considered for our analysis:
 
 df <- get_enrolments_count_per_run(enrolments_df)
 df <- df %>% rename( c(Run.Number = run_num, Enrolments = n) )
-knitr::kable(df, col.names = gsub("[.]", " ", names(df)), caption = "Enrollments over all runs")
+knitr::kable(df, col.names = gsub("[.]", " ", names(df)), 
+             caption = "Enrollments over all runs")
 
 ```
 
@@ -218,18 +223,18 @@ get_plot_enrolements_count_per_country(enrolments_df)
 
 ```
 
-As Newcastle University is an institution in the United Kingdom, it is evident that most enrollments come from this country.
+As Newcastle University is an institution in the United Kingdom, it is evident that most enrollments come from this country as we can see in the chart from figure \@ref(fig:eda1).
 
 ### Learners demographics
 
 #### Ages
 
-```{r eda20, include = TRUE, message = TRUE, out.width="75%", fig.cap="Total Enrollments per Age Range", fig.align='center'}
+```{r eda20, include = TRUE, message = TRUE}
 
 df <- get_enrolments_count_per_age(enrolments_df)
 df <- df %>% rename( c(Age.Range = age_range, Enrolments = n) )
-knitr::kable(df, col.names = gsub("[.]", " ", names(df)))
-
+knitr::kable(df, col.names = gsub("[.]", " ", names(df)), 
+             caption = "Total Enrollments per Age Range")
 
 ```
 
@@ -239,76 +244,94 @@ get_plot_enrolments_count_per_age(enrolments_df)
 
 ```
 
-We can observe that the most enthusiastic age group to be enrolled was 25-35.
+We can observe that in figure \@ref(fig:eda2) and table \@ref(tab:eda20) the most enthusiastic age group to be enrolled was 25-35.
 
 #### Highest Education Level
 
-```{r eda3, include = TRUE, message = TRUE, out.width="75%", fig.cap="Total Enrollments per Highest Education Level", fig.align='center'}
+```{r eda3, include = TRUE, message = TRUE, out.width="75%"}
 df <- get_enrolments_count_per_edlvl(enrolments_df)
 df <- df %>% rename( c(Highest.Education.Level = highest_education_level, Enrolments = n) )
-knitr::kable(df, col.names = gsub("[.]", " ", names(df)))
-
-get_plot_enrolments_count_per_edlvl(enrolments_df)
-
+knitr::kable(df, col.names = gsub("[.]", " ", names(df)), 
+             caption = "Total Enrollments per Highest Education Level")
 ```
 
-People with University degrees are an important proportion of the enrollments, followed by University masters.
+```{r eda30, include = TRUE, message = TRUE, out.width="75%", fig.cap="Total Enrollments per Highest Education Level", fig.align='center'}
+get_plot_enrolments_count_per_edlvl(enrolments_df)
+```
+
+People with University degrees are an important proportion of the enrollments, followed by University masters as it can be observed in figure \@ref(fig:eda3) and table \@ref(tab:eda3).
 
 #### Employment Status
 
 ```{r eda4, include = TRUE, message = TRUE, out.width="75%", fig.cap="Total Enrollments per Employment Status", fig.align='center'}
 df <- get_enrolments_count_per_employment_status(enrolments_df)
 df <- df %>% rename( c(Employment.Status = employment_status, Enrolments = n) )
-knitr::kable(df, col.names = gsub("[.]", " ", names(df)))
+knitr::kable(df, col.names = gsub("[.]", " ", names(df)), 
+             caption = "Total Enrollments per Employment Status")
 
+```
+
+```{r eda40, include = TRUE, message = TRUE, out.width="75%", fig.cap="Total Enrollments per Employment Area", fig.align='center'}
 get_plot_enrolments_count_per_employment_status(enrolments_df)
 
 ```
 
-Those who are working full time make are the ones more attracted to be enrolled in this course.
+From in figure \@ref(fig:eda40) and table \@ref(tab:eda4), we can see that those who are working full time make are the ones more attracted to be enrolled in this course.
 
 #### Employment Area
 
-```{r eda5, include = TRUE, message = TRUE, out.width="75%", fig.cap="Total Enrollments per Employment Area", fig.align='center'}
+```{r eda5, include = TRUE, message = TRUE}
 df <- get_enrolments_count_per_employment_area(enrolments_df)
 df <- df %>% rename( c(Employment.Area = employment_area, Enrolments = n) )
-knitr::kable(df, col.names = gsub("[.]", " ", names(df)))
+knitr::kable(df, col.names = gsub("[.]", " ", names(df)), 
+             caption = "Total Enrollments per Employment Status")
 
+```
+
+```{r eda50, include = TRUE, message = TRUE, out.width="75%", fig.cap="Total Enrollments per Employment Area", fig.align='center'}
 get_plot_enrolments_count_per_employment_area(enrolments_df)
 
 ```
 
-Not surprisingly, Information Technology is the predominant area, as this course provides tools and information that is crucial for this particular sector.
+Not surprisingly, Information Technology is the predominant area, as this course provides tools and information that is crucial for this particular sector, as represented in figure \@ref(fig:eda50) and table \@ref(tab:eda5).
 
 ## Leaving Surveys
 
 Learners archetypes leaving
 
-```{r eda7, include = TRUE, message = TRUE, out.width="75%", fig.cap="Total Leavings per Archetypes", fig.align='center'}
+```{r eda7, include = TRUE, message = TRUE}
 
 df <- get_archetypes_count_from_survey_responses(archetype_survey_df)
 df <- df %>% rename( c(Archetype = archetype, Leaving.Count = n) )
-knitr::kable(df, col.names = gsub("[.]", " ", names(df)))
+knitr::kable(df, col.names = gsub("[.]", " ", names(df)), 
+             caption = "Total Leavings per Archetypes")
+
+```
+
+```{r eda70, include = TRUE, message = TRUE, out.width="75%", fig.cap="Total Leavings per Archetypes", fig.align='center'}
 
 get_plot_archetypes_count_from_survey_responses(archetype_survey_df)
 
 ```
 
-We found that vitalisers were the group that leave the most from the total runs.
+From table \@ref(tab:eda70) and figure \@ref(fig:eda7), we found that vitalisers were the group that leave the most from the total runs.
 
 #### Leaving reasons
 
-```{r eda8, include = TRUE, message = TRUE, out.width="75%", fig.cap="Leaving Reasons for all Runs", fig.align='center'}
-
+```{r eda8, include = TRUE, message = TRUE}
 df <- get_leaving_reasons_count(leaving_survey_df)
 df <- df %>% rename( c(Leaving.Reason = leaving_reason, Leaving.Count = n) )
-knitr::kable(df, col.names = gsub("[.]", " ", names(df)))
+knitr::kable(df, col.names = gsub("[.]", " ", names(df)), 
+             caption = "Leaving Reasons for all Runs")
+```
+
+```{r eda80, include = TRUE, message = TRUE, out.width="75%", fig.cap="Leaving Reasons for all Runs", fig.align='center'}
 
 get_plot_leaving_reasons_count(leaving_survey_df)
 
 ```
 
-The most common leaving reason was that learners do not have enough time to complete or follow the pace of the course.
+It can be seen in \@ref(tab:eda80) and figure \@ref(fig:eda8), that the most common leaving reason was that learners do not have enough time to complete or follow the pace of the course.
 
 ## Modeling
 
@@ -318,13 +341,11 @@ As for the initial efforts for the enrollment analysis, the customer is interest
 
 Based on our previous analysis, we can use the data from the enrollments per run to try to predict the following number of runs in future project iteration.
 For this current deployment cycle, modeling is not currently a required step to obtain a deliverable product.
-In future iterations, we should consider that the customer would like us to do more research in this particular topic.
+In future iterations, we should consider that the customer would like us to do more research in this particular topic, particularly when looking at \@ref(tab:eda01) and in figure \@ref(fig:eda1).
 
 # Evaluation
 
-We consider that the customer can get a reasonable insight of the current course situation.
-Continuous efforts should be deployed in order to increase enrollments.
-As it could be seen from the Exploratory Data Analysis, there is a significant difference between the United Kingdom and the rest of the countries.
+We consider that the customer can get a reasonable insight of the current course situation by having explored and obtained run-condensed results from the first questions related to enrollments. The customer could then evaluate their marketing targets and make the necessary efforts in order to increase enrollments and stop the declining trend. Furthermore, there can also detect that there are  there is a significant difference between the United Kingdom and the rest of the countries.
 In case in future runs the enrollment trend changes, we can create new analysis instances based on data from new runs.
 
 # Deployment
@@ -339,11 +360,13 @@ The deployment execution pipeline using continuous deployment and continuous int
 
 As for now, the project directory should be loaded into RStudio, set as the working directory, have the "report.rmd" file opened and proceed to execute the "Knit" command to generate a PDF in the "reports" directory.
 
+Unit Testing can be run using "test.project()" command in RStudio, or in case this wants to be included in a CI/CD pipeline, this must be integrated as a command being run before the deployment of the document takes places.
+
 ## Development phases and repository branching strategy
 
 Code units, unit testing and documentation is all condensed in a single GIT repository that contains the root of a ProjectTemplate project.
 
-For internal purposes, we used GIT to keep track of changes.
+For internal purposes, we used GIT to keep track of changes. The repository can be seen in the following URL: https://github.com/gmedina-mx/cs8631-datamngmt-ncl-final-assignment
 
 As this project was only managed by one person of our staff, no branching strategy was followed.
 Once this project gets to production, the following GIT branching strategy should be used:
