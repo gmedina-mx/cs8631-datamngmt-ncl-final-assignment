@@ -16,7 +16,7 @@ lines of R code:
 	load.project()
 
 After you enter the second line of code, you'll see a series of automated
-messages as ProjectTemplate goes about doing its work. This work involves:
+messages as ProjectTemplate goes about doing its work. This process involves:
 * Reading in the global configuration file contained in `config`.
 * Loading any R packages you listed in the configuration file.
 * Reading in any datasets stored in `data` or `cache`.
@@ -37,5 +37,8 @@ all of the libraries you want to use.
 In case project is not building:
 -    Make sure ProjectTemplate and the following libraries: bookdown, reshape2, plyr, tidyverse, stringr, lubridate, snakecase.
 -    A LaTex distribution is installed.
--    R distributions is installed.
+-    R distribution is installed.
 
+## Git Log
+
+You can find a git log of this project in the following URL: https://github.com/gmedina-mx/cs8631-datamngmt-ncl-final-assignment/commits/master
